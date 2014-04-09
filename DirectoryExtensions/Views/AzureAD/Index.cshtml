@@ -1,0 +1,106 @@
+﻿@model DirectoryExtensions.Models.UserDetails
+
+@{
+    ViewBag.Title = "UserProfile - " + User.Identity.Name;
+}
+
+<h4>Current User: @User.Identity.Name</h4>
+
+@{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)        
+
+        //We want all values except the YubiKey to be read-only, 
+        //yet we want to POST them so we include them as hidden fields as well
+        @Html.HiddenFor(model => model.userPrincipalName)
+        @Html.HiddenFor(model => model.displayName)
+        @Html.HiddenFor(model => model.givenName)
+        @Html.HiddenFor(model => model.surname)
+        @Html.HiddenFor(model => model.jobTitle)
+        @Html.HiddenFor(model => model.department)
+        @Html.HiddenFor(model => model.mobile)
+        @Html.HiddenFor(model => model.city)
+        @Html.HiddenFor(model => model.streetAddress)
+        @Html.HiddenFor(model => model.country)
+        @Html.HiddenFor(model => model.postalCode)
+        @Html.HiddenFor(model => model.telephoneNumber)
+        @Html.HiddenFor(model => model.lastDirSyncTime)
+    
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.displayName)</td>
+                <td>@Html.DisplayFor(model => model.displayName)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.givenName)</td>
+                <td>@Html.DisplayFor(model => model.givenName)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.surname)</td>
+                <td>@Html.DisplayFor(model => model.surname)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.jobTitle)</td>
+                <td>@Html.DisplayFor(model => model.jobTitle)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.department)</td>
+                <td>@Html.DisplayFor(model => model.department)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.mobile)</td>
+                <td>@Html.DisplayFor(model => model.mobile)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.city)</td>
+                <td>@Html.DisplayFor(model => model.city)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.streetAddress)</td>
+                <td>@Html.DisplayFor(model => model.streetAddress)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.country)</td>
+                <td>@Html.DisplayFor(model => model.country)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.postalCode)</td>
+                <td>@Html.DisplayFor(model => model.postalCode)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.telephoneNumber)</td>
+                <td>@Html.DisplayFor(model => model.telephoneNumber)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.lastDirSyncTime) </td>
+                <td>@Html.DisplayFor(model => model.lastDirSyncTime)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.YubiKeyId)</td>
+                <td>@Html.EditorFor(model => model.YubiKeyId)</td>
+            </tr>
+        </table>
+    
+        if (Model.YubiKeyId.IsEmpty())
+        { 
+            @Html.Hidden("YubiKeyAction","Register")           
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Register YubiKey" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        if (!Model.YubiKeyId.IsEmpty())
+        {           
+            @Html.Hidden("YubiKeyAction","Unregister")     
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Unregister YubiKey" class="btn btn-default" />
+                </div>
+            </div>
+        }   
+    }
+}
+
