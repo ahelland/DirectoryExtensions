@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CalendarSharing.Models.UserDetails>
+
+@{
+    ViewBag.Title = "PublishCalendars";
+}
+
+<h2>Publish the calendars in my organization</h2>
+
+@{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.displayName)</th>
+            <th>@Html.DisplayNameFor(model => model.mailNickname)</th>
+            <th>@Html.DisplayNameFor(model => model.PublishedCal)</th>
+            <th>@Html.DisplayNameFor(model => model.PublishedCalendarUrl)</th>
+            <th>@Html.DisplayNameFor(model => model.PublishedICalUrl)</th>
+        </tr>
+
+        @foreach (var item in Model.Select((value, i) => new { i, value }))
+        {                        
+            string indexer = "[" + item.i + "].";
+            string dn = "displayName";
+            string alias = "mailNickName";
+            string pCal = "PublishedCal";
+            string upn = "userPrincipalName";
+            
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.value.displayName)
+                    <input id="item_value_displayName" name="@indexer@dn" type="hidden" value="@item.value.displayName" />
+                    <input id="item_value_displayName" name="@indexer@upn" type="hidden" value="@item.value.userPrincipalName" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.value.mailNickname)
+                    <input id="item_value_mailNickname" name="@indexer@alias" type="hidden" value="@item.value.mailNickname" />
+                </td>
+                <td>                    
+                    <input class="check-box" id="item_value_PublishedCal" name="@indexer@pCal" type="checkbox" value="true" />
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.value.PublishedCalendarUrl)</td>
+                <td>@Html.DisplayFor(modelItem => item.value.PublishedICalUrl)</td>
+            </tr>
+        }        
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Enable/Disable calendars" class="btn btn-default" />
+        </div>
+    </div>
+
+    }
+}

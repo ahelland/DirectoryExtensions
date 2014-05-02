@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CalendarSharing.Models.UserDetails>
+@using CalendarSharing.Utils;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Contoso Calendar Service</h1>
+    <p class="lead">Scan the QR codes below to check our calendars.</p>   
+</div>
+
+@if (ViewBag.UserCount == 0)
+{
+    <p>Seems like you've either not shared any calendars, or your directory extensions aren't working.</p>
+}
+@if (ViewBag.UserCount > 0)
+{
+    <table class="table table-striped table-condensed">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.mailNickname)'s Calendar</td>
+                <td>@Html.GenerateCalendarQRCode(item.PublishedCalendarUrl,item.mailNickname)</td>                
+            </tr>
+        }
+    </table>
+}

@@ -1,11 +1,22 @@
 # DirectoryExtensions
 ## A sample solution for how to use Azure Active Directory Extension Properties
 
-This is a Proof-of-Concept type of solution for testing out/playing with schema extensions in Azure Active Directory. It consists of two web apps where one is responsible for inputing data into Azure AD, and the other uses this data as part of it's own flow.
+This is a Proof-of-Concept type of solution for testing out/playing with schema extensions in Azure Active Directory. 
+Currently there's two scenarios included:
+
+Scanerio 1: Consists of two web apps where one is responsible for inputing data into Azure AD, and the other uses this data as part of it's own flow.
 
 For some background info on this check out the following blog posts:  
 http://mobilitydojo.net/2014/04/08/extending-your-azure-active-directory-part-1/
 http://mobilitydojo.net/2014/04/09/extending-your-azure-active-directory-part-2/
+
+Scenario 2: A web app that interfaces with Exchange Online/Office 365 to enable an administrator to publish calendars publicly.
+The url for the calendars will then be listed as QR codes for easy sharing with devices with a camera.
+
+More background in the following blog post:
+http://mobilitydojo.net/2014/05/02/using-azure-ad-directory-extensions-with-calendar-publishing/
+
+Note: Enabling and disabling calendars seems to take forever; this is due to the way the remote PowerShell connections are implemented and is a known issue.
 
 ### Getting Started
 To test the code you will need to have an Azure Active Directory tenant, which currently requires an Azure subscription. (The apps themselves do not have to run on Azure, but there needs to be entries for them in Azure AD.) 
